@@ -226,7 +226,7 @@
                             "type": ["string", "boolean", "null"]
                         },
                         "value": {
-                            "type": ["number", "string", "boolean", "null", "array", "object"]
+                            "type": ["number", "string", "boolean", "null", "array", "object", "integer"]
                         }
                     }
                 }

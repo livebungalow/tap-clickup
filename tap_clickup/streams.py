@@ -7,7 +7,7 @@ from tap_clickup.client import ClickUpStream
 
 SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 
-
+#
 class TeamsStream(ClickUpStream):
     """Teams"""
 
@@ -221,12 +221,14 @@ class TasksStream(ClickUpStream):
     name = "task"
     # Date_updated_gt is greater than or equal to not just greater than
     path = "/team/{team_id}/task"
+    # path = "/task/2h5x4m4"
     primary_keys = ["id"]
     replication_key = "date_updated"
     is_sorted = True
     # ignore_parent_replication_key = True
     schema_filepath = SCHEMAS_DIR / "task.json"
     records_jsonpath = "$.tasks[*]"
+    # records_jsonpath = "$"
     parent_stream_type = TeamsStream
 
     # Need this stub as a hack on _sync to force it to use Partitions
@@ -268,9 +270,10 @@ class TasksStream(ClickUpStream):
         # From the api docs, https://clickup.com/api.
         # you should check list limit against the length of each response
         # to determine if you are on the last page.
+        # self.logger.warning(response.json())
         if len(response.json()["tasks"]) != 0:
-            newtoken = previous_token + 1
+             newtoken = previous_token + 1
         else:
-            newtoken = None
+             newtoken = None
 
         return newtoken
